@@ -9,6 +9,7 @@ alias fzf="fzf --highlight-line"
 alias git-list="find . -name ".git" -type d -prune"
 alias vs="code"
 alias cl="clear"
+alias stat="git status"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
