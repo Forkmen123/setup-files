@@ -10,6 +10,11 @@ alias git-list="find . -name ".git" -type d -prune"
 alias vs="code"
 alias cl="clear"
 alias stat="git status"
+alias ask="ollama run"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -24,4 +29,5 @@ source /usr/local/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export PATH="$HOME/.local/bin:$PATH"
+export OLLAMA_HOST="10.8.8.77:11434"
 clear
