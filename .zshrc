@@ -15,6 +15,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+alias kill="kill -9"
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -24,3 +25,6 @@ export OLLAMA_HOST="10.8.8.77:11434"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
 clear
+
+#this is for fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
