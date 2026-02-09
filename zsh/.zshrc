@@ -1,40 +1,72 @@
-alias ls="eza"
-alias ll="eza -lh --git --no-permissions --no-user --group-directories-first --sort Extension --time-style relative  -w 3 --icons=always" 
-alias la="eza -lha --git --no-permissions --no-user --group-directories-first --sort Extension --time-style relative --icons=always" 
-alias run="uv run"
-alias zshrc="vim ~/.zshrc"
-alias src="source ~/.zshrc"
-alias tree="eza -T -L 3" 
-alias fzf="fzf --highlight-line"
-alias git-list="find . -name ".git" -type d -prune"
-alias vs="code"
-alias cl="clear"
-alias stat="git status"
-alias ask="ollama run"
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias kill="kill -9"
-alias cat="bat"
-alias y="yazi"
-alias clip="pbcopy"
-alias paste="pbpaste"
-alias tommypackage="vim /Users/tommy/Library/texmf/tex/latex/TommyPackage/TommyPackage.sty"
-alias hsnips="vim Library/Application\ Support/Code/User/globalStorage/draivin.hsnips/hsnips/latex.hsnips"
-
-eval "$(zoxide init zsh)"
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export PATH="$HOME/.local/bin:$PATH"
-
+#===================================
+#      EXPORTS & ENVIRONMENT
+#===================================
 #export OLLAMA_HOST="10.8.8.77:11434"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 export EDITOR=vim
-eval "$(starship init zsh)"
-clear
 
-#this is for fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# add custom binaries to PATH
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH"
+#export PATH="$HOME/.local/bin:$PATH"
+
+
+#===================================
+#      SHELL PLUGINS & TOOLS
+#===================================
+# Homebrew prefix (cached for speed)
+BREW_PREFIX=$(brew --prefix)
+
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+
+# fzf config 
+if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+fi 
+
+# setup fzf keybindings and fuzzy completion
 source <(fzf --zsh)
+
+# zsh plugins autocomplete &N suggestions
+source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+
+#===================================
+#             ALIASES
+#===================================
+
+# -- navigation -- 
+alias y="yazi"
+alias cl="clear"
+
+# -- listing & files --
+alias ls="eza"
+alias ll="eza -lh --git --no-permissions --no-user --group-directories-first --sort Extension --time-style relative  -w 3 --icons=always" 
+alias la="eza -lha --git --no-permissions --no-user --group-directories-first --sort Extension --time-style relative --icons=always" 
+alias tree="eza -T -L 3" 
+
+# -- git -- 
+alias gst="git status"
+alias git-list="find . -name ".git" -type d -prune"
+
+# -- config & editor quick access -- 
+alias zshrc="vim ~/.zshrc"
+alias src="source ~/.zshrc"
+alias vs="code"
+
+# -- LaTeX -- 
+alias tommypackage="vim /Users/tommy/Library/texmf/tex/latex/TommyPackage/TommyPackage.sty"
+alias hsnips="vim Library/Application\ Support/Code/User/globalStorage/draivin.hsnips/hsnips/latex.hsnips"
+
+# -- system & utils -- 
+alias clip="pbcopy"
+alias paste="pbpaste"
+alias run="uv run"
+alias nuke="kill -9"
+
+# -- AI & LLM -- 
+alias ask="ollama run"
 alias deepseek='llama-cli --hf-repo Triangle104/DeepSeek-R1-Distill-Qwen-14B-Q4_K_M-GGUF --hf-file deepseek-r1-distill-qwen-14b-q4_k_m.gguf -cnv'
+
+clear

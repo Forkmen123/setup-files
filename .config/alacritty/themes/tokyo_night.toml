@@ -1,0 +1,23 @@
+[colors.primary]
+background = "#15161e"  # Darker, deep storm blue
+foreground = "#f7ebf6"  # Brighter, crisp lavender-white
+
+[colors.normal]
+black   = "#15161e"     # Matches background for better blending
+blue    = "#7aa2f7"     # Retained standard blue (it's already vibrant)
+cyan    = "#2ac3de"     # Much brighter cyan (electric blue)
+green   = "#9ece6a"     # Standard green is quite visible, but...
+magenta = "#d65d7e"     # Shifted slightly brighter
+red     = "#f7768e"     # Standard red
+white   = "#f7ebf6"     # Standard foreground
+yellow  = "#ffc777"     # More golden/vibrant yellow
+
+[colors.bright]
+black   = "#414868"     # Lighter gray for UI elements
+blue    = "#5d90ff"     # Deep electric blue
+cyan    = "#7dcfff"     # Sky blue
+green   = "#b9f27c"     # Neon lime
+magenta = "#e68aab"     # Shifted to a brighter purple/orange tone
+red     = "#ff9e64"     # Hot orange-red
+white   = "#f7ebf6"     # Pure white/lavender
+yellow  = "#e0af68"     # Bright Amber
