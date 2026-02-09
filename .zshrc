@@ -1,5 +1,5 @@
 alias ls="eza"
-alias ll="eza -lh --git --no-permissions --no-user --group-directories-first --sort Extension --time-style relative --git-ignore -w 3 --icons=always" 
+alias ll="eza -lh --git --no-permissions --no-user --group-directories-first --sort Extension --time-style relative  -w 3 --icons=always" 
 alias la="eza -lha --git --no-permissions --no-user --group-directories-first --sort Extension --time-style relative --icons=always" 
 alias run="uv run"
 alias zshrc="vim ~/.zshrc"
@@ -16,15 +16,24 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias kill="kill -9"
+alias cat="bat"
+alias y="yazi"
+alias clip="pbcopy"
+alias paste="pbpaste"
+alias tommypackage="/Users/tommy/Library/texmf/tex/latex/TommyPackage/TommyPackage.sty"
 
+eval "$(zoxide init zsh)"
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export PATH="$HOME/.local/bin:$PATH"
 
 #export OLLAMA_HOST="10.8.8.77:11434"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+export EDITOR=vim
 eval "$(starship init zsh)"
 clear
 
 #this is for fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
+alias deepseek='llama-cli --hf-repo Triangle104/DeepSeek-R1-Distill-Qwen-14B-Q4_K_M-GGUF --hf-file deepseek-r1-distill-qwen-14b-q4_k_m.gguf -cnv'
