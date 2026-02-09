@@ -20,7 +20,8 @@ alias cat="bat"
 alias y="yazi"
 alias clip="pbcopy"
 alias paste="pbpaste"
-alias tommypackage="/Users/tommy/Library/texmf/tex/latex/TommyPackage/TommyPackage.sty"
+alias tommypackage="vim /Users/tommy/Library/texmf/tex/latex/TommyPackage/TommyPackage.sty"
+alias hsnips="vim Library/Application\ Support/Code/User/globalStorage/draivin.hsnips/hsnips/latex.hsnips"
 
 eval "$(zoxide init zsh)"
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
