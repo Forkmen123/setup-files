@@ -68,5 +68,10 @@ alias nuke="kill -9"
 # -- AI & LLM -- 
 alias ask="ollama run"
 alias deepseek='llama-cli --hf-repo Triangle104/DeepSeek-R1-Distill-Qwen-14B-Q4_K_M-GGUF --hf-file deepseek-r1-distill-qwen-14b-q4_k_m.gguf -cnv'
+alias dsr1="mlx_lm.chat --model ~/llm/DeepSeek-R1 --max-tokens 8192"
+alias nemo="mlx_lm.chat --model ~/llm/Mistral-Nemo --max-tokens 8192"
+alias qwen="mlx_lm.chat --model ~/llm/Qwen --max-tokens 8192"
+alias llama3="mlx_lm.chat --model ~/llm/llama3 --max-tokens 8192"
+
 
 clear

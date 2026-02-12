@@ -1,0 +1,152 @@
+global
+function math(context) {
+    // Vérifie si on est dans une zone de mathématiques
+    return context.scopes.some(s => s.startsWith("meta.math"));
+}
+endglobal
+
+snippet // "Fraction" A
+\frac{${1}}{${2}} $0
+endsnippet
+
+snippet mk "Inline Math" wA
+$${1}$$0
+endsnippet
+
+snippet beg "Begin Environment" wA
+\begin{${1:align*}}
+	${0:${VISUAL}}
+\end{$1}
+endsnippet
+
+context math(context)
+snippet oo "Infinity" wA
+\infty
+endsnippet
+
+snippet sum "Somme" wA
+\sum_{${1:n}=${2:0}}^{${3:\infty}} $0
+endsnippet
+
+snippet lim "Limite" wA
+\lim_{${1:x} \to ${2:\infty}} $0
+endsnippet
+
+
+context math(context)
+snippet ev "Evaluation bar auto" wA
+\bigg|_{${1:x_0}=${2:0}} $0
+endsnippet
+
+
+
+// --- Implications Logiques ---
+
+context math(context)
+snippet => "Implies" wA
+\implies 
+endsnippet
+
+context math(context)
+snippet =< "Implied by" wA
+\impliedby 
+endsnippet
+
+context math(context)
+snippet iff "If and only if" wA
+\iff 
+endsnippet
+
+// --- Flèches Simples (Limites, Fonctions) ---
+
+context math(context)
+snippet -> "To (rightarrow)" wA
+\to 
+endsnippet
+
+context math(context)
+snippet !> "Mapsto (pour définitions de fonctions)" wA
+\mapsto 
+endsnippet
+
+// --- Autres ---
+
+context math(context)
+snippet <-> "Left Right Arrow" wA
+\leftrightarrow 
+endsnippet
+
+
+// Tapez "__" pour créer _{} et entrer dedans
+context math(context)
+snippet __ "Subscript with {}" wA
+_{${1}} $0
+endsnippet
+
+// Tapez "^^" ou "td" pour créer ^{} et entrer dedans
+context math(context)
+snippet sp "Superscript with {}" wA
+^{${1}} $0
+endsnippet
+
+// Déclencheur : Une lettre + un chiffre (ex: x1, y2, A0)
+context math(context)
+snippet `([a-zA-Z])(\d)` "Auto Subscript" wA
+``rv = m[1] + "_" + m[2]``
+endsnippet
+
+// Déclencheur : Une lettre + deux chiffres (ex: x12)
+context math(context)
+snippet `([a-zA-Z])(\d\d)` "Auto Subscript 2 digits" wA
+``rv = m[1] + "_{" + m[2] + "}"``
+endsnippet
+
+
+
+context math(context)
+snippet === "Equivalence / Identically equal" wA
+\equiv 
+endsnippet
+
+context math(context)
+snippet != "Not Equal" wA
+\neq 
+endsnippet
+
+
+context math(context)
+snippet app "Approx" wA
+\approx 
+endsnippet
+
+
+// --- Parenthèses automatiques ---
+context math(context)
+snippet lrp "Left( )Right" wA
+\left( ${1:${VISUAL}} \right) $0
+endsnippet
+
+// --- Crochets automatiques ---
+context math(context)
+snippet lrc "Left[ ]Right" wA
+\left[ ${1:${VISUAL}} \right] $0
+endsnippet
+
+// --- Accolades automatiques ---
+// Note : Les accolades nécessitent un \ devant en LaTeX
+context math(context)
+snippet lra "Left\{ \}Right" wA
+\left\\{ ${1:${VISUAL}} \right\\} $0
+endsnippet
+
+// --- Valeur Absolue / Norme ---
+context math(context)
+snippet lrb "Left| |Right" wA
+\left| ${1:${VISUAL}} \right| $0
+endsnippet
+
+// --- Chevrons (pour la physique quantique / moyennes) ---
+context math(context)
+snippet lrc "Left< >Right (Angle brackets)" wA
+\left\langle ${1:${VISUAL}} \right\rangle $0
+endsnippet
