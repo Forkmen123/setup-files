@@ -72,6 +72,7 @@ alias dsr1="mlx_lm.chat --model ~/llm/DeepSeek-R1 --max-tokens 8192"
 alias nemo="mlx_lm.chat --model ~/llm/Mistral-Nemo --max-tokens 8192"
 alias qwen="mlx_lm.chat --model ~/llm/Qwen --max-tokens 8192"
 alias llama3="mlx_lm.chat --model ~/llm/llama3 --max-tokens 8192"
+alias aichat-config="vim /Users/tommy/Library/Application\ Support/aichat/config.yaml"
 
 
 clear
