@@ -76,3 +76,8 @@ alias aichat-config="vim /Users/tommy/Library/Application\ Support/aichat/config
 
 
 clear
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/tommy/.lmstudio/bin"
+# End of LM Studio CLI section
+

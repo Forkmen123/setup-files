@@ -19,6 +19,10 @@ snippet beg "Begin Environment" wA
 \end{$1}
 endsnippet
 
+snippet para "paragraph*" A
+\paragraph*{${1}}
+endsnippet
+
 context math(context)
 snippet oo "Infinity" wA
 \infty
@@ -150,3 +154,5 @@ context math(context)
 snippet lrc "Left< >Right (Angle brackets)" wA
 \left\langle ${1:${VISUAL}} \right\rangle $0
 endsnippet
+
+
