@@ -64,6 +64,8 @@ alias clip="pbcopy"
 alias paste="pbpaste"
 alias run="uv run"
 alias nuke="kill -9"
+alias sp="spotify_player"
+alias music='kitty --title "Spotify" --detach -e spotify-player -c ~/.config/spotify-player/kitty'
 
 # -- AI & LLM -- 
 alias ask="ollama run"
