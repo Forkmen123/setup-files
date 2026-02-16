@@ -5,9 +5,15 @@ function math(context) {
 }
 endglobal
 
+context math(context)
 snippet // "Fraction" A
 \frac{${1}}{${2}} $0
 endsnippet
+
+context math(context)
+snippet qeq "quad et quad" wA
+\quad \text{et} \quad
+endsinippet
 
 snippet mk "Inline Math" wA
 $${1}$$0

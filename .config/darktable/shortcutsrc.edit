@@ -1,5 +1,6 @@
 0=disabled;iop/flip/rotate 90 degrees CW
 0=disabled;lib/timeline/stop selection
+None=iop/colorequal/graph;*0.001
 None;left=fallbacks/utility module
 None;left;double=fallbacks/utility module;reset
 None;right=fallbacks/utility module;presets
