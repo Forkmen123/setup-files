@@ -76,8 +76,13 @@ alias qwen="mlx_lm.chat --model ~/llm/Qwen --max-tokens 8192"
 alias llama3="mlx_lm.chat --model ~/llm/llama3 --max-tokens 8192"
 alias aichat-config="vim /Users/tommy/Library/Application\ Support/aichat/config.yaml"
 
-
-clear
+# For claude code
+export ANTHROPIC_BASE_URL="http://127.0.0.1:1234"
+export ANTHROPIC_AUTH_TOKEN=lmstudio
+export API_TIMEOUT_MS="3000000"
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+export ANTHROPIC_MODEL="default_model"
+export ANTHROPIC_SMALL_FAST_MODEL="default_model"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/tommy/.lmstudio/bin"
