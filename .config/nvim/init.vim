@@ -1,19 +1,70 @@
 set encoding=utf-8
 set termguicolors
 set number relativenumber
+set spelllang=fr,en_us
+set spell
+set numberwidth=1
+set signcolumn=number
+set laststatus=0
+set cmdheight=0
+set noshowmode
+" Ne pas ouvrir le menu Quickfix automatiquement en cas de succès
+let g:vimtex_quickfix_mode = 0
+
+" Désactiver les messages de succès dans la ligne de commande (en bas)
+let g:vimtex_echo_ignore_wait = 1
+
+" Configurer les notifications : uniquement les erreurs
+let g:vimtex_compiler_silent = 1
+
+
+
 
 nmap <localleader>c <Plug>(vimtex-compile)
 
 let g:tex_flavor='latex'
 let g:vimtex_view_method='sioyek'
 let g:vimtex_quickfix_mode=0
-set conceallevel=1
+
+set conceallevel=2
 let g:tex_conceal="abdmg"
+highlight texStatement guifg=#89b4fa gui=italic " Le bleu cyan des commandes
+highlight texArg       guifg=#f9e2af            " Le jaune des arguments {}
+highlight texMathZoneX guifg=#f2cdcd            " Le rose/rouge des zones mathématiques
+highlight Normal       guibg=#15171c            " Ton fond 21, 23, 28
+
+
 let g:vimtex_compiler_method = 'latexmk'
 let g:vimtex_complete_enabled = 0
 set rtp+=/usr/local/opt/fzf
 let g:fzf_vim = {}
 let g:fzf_vim.preview_window = []
+let g:vimtex_view_automatic = 0 
+
+let g:vimtex_compiler_latexmk = {
+    \ 'build_dir' : '',
+    \ 'callback' : 1,
+    \ 'continuous' : 1,
+    \ 'executable' : 'latexmk',
+    \ 'options' : [
+    \   '-pdf',
+    \   '-interaction=nonstopmode',
+    \   '-synctex=1',
+    \   '-file-line-error',
+    \ ],
+    \}
+
+" Configuration Sioyek
+let g:vimtex_view_sioyek_options = '--reuse-window'
+
+" Démarrer automatiquement le serveur Neovim
+if empty(v:servername) && exists('*remote_startserver')
+  call remote_startserver('VIM')
+endif
+
+" Auto-compilation à la sauvegarde (optionnel)
+let g:vimtex_compiler_latexmk_engines = {'_' : '-pdf'}
+autocmd BufWritePost *.tex silent! VimtexCompile
 
 nnoremap <D-z> u
 nnoremap <D-s-z> <C-r>
@@ -44,6 +95,13 @@ vnoremap <A-S-j> :t'><CR>gv
 vnoremap <A-S-k> :t'<-1<CR>gv
 
 command! ReloadSnippets call UltiSnips#RefreshSnippets()
+
+" Forward Search vers Sioyek avec Cmd + Shift + J
+nmap <A-J> <plug>(vimtex-view)
+imap <A-J> <esc><plug>(vimtex-view)a
+
+nmap <A-/> gcc
+vmap <A-/> gc
 
 
 " --- Custom LaTeX highlights (TreeSitter) ---
@@ -99,7 +157,14 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'matze/vim-move'
 
+Plug 'folke/tokyonight.nvim'
+
+
 call plug#end()
+
+" Configuration avant de charger le colorscheme
+let g:tokyonight_style = "night" " Force la version la plus sombre
+colorscheme tokyonight
 
 "Configuration UltiSnips 
 let g:UltiSnipsExpandTrigger       = '<Tab>'   
@@ -196,3 +261,26 @@ EOF
 
 set signcolumn=yes
 lua vim.diagnostic.config({ virtual_text = true, signs = true })
+
+
+
+"theme colors
+augroup CustomLatexColors
+    autocmd!
+    " Fond du terminal (ton bleu-gris 21, 23, 28)
+    autocmd ColorScheme * highlight Normal guibg=#15171c guifg=#dcdcdc
+
+    " Commandes LaTeX en Cyan (ex: \usepackage)
+    autocmd ColorScheme * highlight texStatement guifg=#8be9fd gui=italic
+
+    " Arguments en Jaune/Beige (ex: {amsmath})
+    autocmd ColorScheme * highlight texOptArgs guifg=#f1fa8c
+    autocmd ColorScheme * highlight texArg guifg=#f1fa8c
+
+    " Environnements en Bleu (ex: document, center)
+    autocmd ColorScheme * highlight texBeginEndName guifg=#8be9fd gui=bold
+    
+    " Chiffres et numéros de lignes
+    autocmd ColorScheme * highlight LineNr guifg=#6272a4
+augroup END
+

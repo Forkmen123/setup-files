@@ -13,9 +13,9 @@ padding.y = 10
 
 decorations = "Buttonless"
 
-opacity = 0.8
+opacity = 0.92
 blur = true
-option_as_alt = "Both"
+# option_as_alt = "Both"
 
 [font]
 size = 18.0
@@ -40,6 +40,37 @@ style = "Bold Italic"
 
 
 [[keyboard.bindings]]
-key = "Return"
-mods = "Shift"
-chars = "\u001B\r"
+key = "J"
+mods = "Alt"
+chars = "\x1bj"  # Envoie Alt+j à Vim
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Alt"
+chars = "\x1bk"  # Envoie Alt+k à Vim
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Alt|Shift"
+chars = "\x1bJ"  # Alt+Shift+j
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Alt|Shift"
+chars = "\x1bK"  # Alt+Shift+k
+
+[[keyboard.bindings]]
+key = "W"
+mods = "Alt"
+chars = "\x1bw"  # Alt+w pour fermer buffer
+
+[[keyboard.bindings]]
+chars = "\u001bJ"
+key = "J"
+mods = "Command|Shift"
+
+
+[[keyboard.bindings]]
+chars = "\u001b/"
+key = "Slash"
+mods = "Command"
