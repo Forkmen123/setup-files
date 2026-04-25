@@ -1,0 +1,180 @@
+\documentclass[11pt, letterpaper]{article}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[french]{babel}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{geometry}
+\RequirePackage{physics}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\geometry{margin=1in}
+\RequirePackage{enumitem}
+\RequirePackage{cancel}
+\RequirePackage{tcolorbox}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{hyperref}
+\RequirePackage[shortlabels]{enumitem} % Listes a) b) c)
+% ----------------------------- Math -------------------------------
+\RequirePackage{amsmath,amssymb,amsthm,mathtools,nicefrac,dsfont} 
+% Symboles et polices mathématiques
+%%\RequirePackage[noabbrev,nameinlink]{cleveref}
+\RequirePackage{nccmath} % commandes de formatage d'équations
+\RequirePackage{mathrsfs} % Lettres cursives
+%\RequirePackage{wasysym,gensymb,textcomp} % Symboles divers
+\RequirePackage[makeroom]{cancel} % Barre oblique d'annulation
+\RequirePackage{calligra}
+\RequirePackage{tensor}
+% Pour les svg
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+
+
+% -------------------------------
+% Constantes fréquentes
+% -------------------------------
+
+% Constantes Djodjo
+
+\newcommand{\hc}{6,626\times10^{-34}}       % Constante de Planck
+\newcommand{\hbc}{1,055\times10^{-34}}      % Constante de Planck réduite
+\newcommand{\hevc}{4,136\times10^{-15}}     % Constante de Plank en eV
+\newcommand{\hbevc}{6,582\times10^{-16}}    % Constante de Plank réduite en eV
+\newcommand{\cc}{2,998\times10^8}           % Vitesse de la lumière
+\newcommand{\kc}{1,381\times10^{-23}}       % Constante de Boltzmann
+\newcommand{\wc}{2,898\times10^{-3}}        % Constante de Wien
+\newcommand{\ec}{1,602\times10^{-19}}       % Charge élémentaire
+\newcommand{\mec}{9,109\times10^{-31}}      % Masse de l'électron
+\newcommand{\sbc}{5,670\times10^{-8}}       % Constante de Stefan-Boltzmann
+\newcommand{\prmtvtc}{8,854\times10^{-12}}  % Permittivité du vide (epsilon 0)
+\newcommand{\prmbltc}{1,257\times10^{-6}}   % Perméabilité du vide (mu 0)
+\newcommand{\rc}{8,3145}                    % Constante des gaz parfaits [J / mol K]
+\newcommand{\gc}{6,674\times10^{-11}}       % Constante gravitationnelle
+\newcommand{\agc}{9.807}                    % Accélération gravitationnelle terrestre
+\newcommand{\sfc}{7,297\times10^{-3}}       % Constante de structure fine
+
+% Constantes Trait (avec les unités)
+
+\newcommand{\vh}{6,626 \times 10^{-34}\text{ J s}}                      % Constante de Planck (J s)
+\newcommand{\vhbar}{1,055 \times  10^{-34} \text{ J s}}                 % Valeur de hbar (J s)
+\newcommand{\vheV}{4,136 \times 10^{-15}\text{ eV s}}                   % Constante de planck en eV s
+\newcommand{\vhbareV}{6,582 \times 10^{-16} \text{ eV s}}               % Valeur de hbar en eV s
+\newcommand{\vc}{2,998 \times 10^{8}\text{ m/s}}                        % c
+\newcommand{\vk}{1,381\times 10^{-23}\text{ m}^2 \text{kg/s}^2 \text{K}}% Constante de Boltzmann
+\newcommand{\vwien}{2,898\times 10^{-3}\text{ m K}}                     % Constante de Wien
+\newcommand{\vecharge}{1,602 \times 10^{-19}\text{ C}}                  % Charge électron
+\newcommand{\vemasse}{9,109 \times 10^{-31}\text{ kg}}                  % Masse électron
+\newcommand{\vstef}{5,670 \times 10^{-8} \text{ W/m}^2\text{K}^4}       % constante de Stefan-Boltzmann
+\newcommand{\veps}{8,854 \times 10^{-12} \text{ F/m}}                   % Permittivité du vide
+\newcommand{\vmu}{1,257\times 10^{-6} \text{ kg m/A}^{2}\text{s}^2}     % Perméabilité du vide
+\newcommand{\vr}{8,314\text{ J/K mol}}                                  % Constante des gaz parfaits
+\newcommand{\vG}{6,674 \times 10^{-11}\text{ m}^3\text{/kg s}^2}        % Valeur de G
+\newcommand{\vg}{9,807 \text{ m/s}^2}       
+
+
+
+
+
+\newcommand{\LL}{\mathcal{L}} % Lagrangien ou transfo Laplace
+\newcommand{\F}{\mathcal{F}}
+
+
+
+\newcommand{\indtemps}{\dv[2]{x}\psi(x) = \frac{2m}{\hbar^2}(V(x) - E)\psi(x)}
+\newcommand{\deptemps}{i\hbar\pdv{}{t} \Psi(x,t) = \left[-\frac{\hbar^2}{2m}\pdv[2]{}{x} + V(x,t)\right]\Psi(x,t)}
+
+% ---------------------------- PM3 ---------------------------- 
+% Relation de récurrence et équation des racines
+\newcommand{\rdr}{[(n+r)(n+r-1)+P_0(n+r)+Q_0]a_n+[P_1(n+r-1)+Q_1]a_{n-1}+...=0}
+\newcommand{\edr}{r^2+(P_0-1)r+Q_0=0}
+
+% ---------------------------- Électromag ----------------------------
+\newcommand{\rn}{% r cursif normal
+\resizebox{!}{1.3ex}{%
+    \begin{tikzpicture}[>=round cap]
+        \clip (0.085em,-0.1ex) rectangle (0.61em,0.875ex);
+        \draw [line width=.1ex, <->, rounded corners=0.13ex] (0.1em,0.1ex) .. controls (0.24em,0.4ex) .. (0.35em,0.8ex) .. controls (0.29em,0.725ex) .. (0.25em,0.6ex) .. controls (0.7em,0.8ex) and (0.08em,-0.4ex) .. (0.55em,0.25ex);
+    \end{tikzpicture}%
+}%
+}
+\newcommand{\rb}{% r cursif gras
+\resizebox{!}{1.3ex}{%
+    \begin{tikzpicture}[>=round cap]
+        \clip (0.085em,-0.1ex) rectangle (0.61em,0.875ex);
+        \draw [line width=.17ex, <->, rounded corners=0.13ex] (0.1em,0.1ex) .. controls (0.24em,0.4ex) .. (0.35em,0.8ex) .. controls (0.29em,0.725ex) .. (0.25em,0.6ex) .. controls (0.7em,0.8ex) and (0.08em,-0.4ex) .. (0.55em,0.25ex);
+    \end{tikzpicture}%
+}%
+}
+\newcommand{\rv}{\hat{\rb}} % r cursif vecteur unitaire
+
+\newcommand{\p}{\mathcal{P}}% pointeur de vecting
+
+% ---------------------------- Méthodes math ----------------------------
+
+\newcommand{\D}{\mathbb{D}} %Pour les groupe D 
+\DeclareMathOperator{\taylor}{ST} % Opérateur ST pour les séries de Taylor
+
+\newcommand{\residus}{\Res[f(z), z_0] = \frac{(m-1)!}\lim_{z\to z_0}\dv[m-1]{z} \{(z-z_0)^m f(z)\}}
+\newcommand{\laurent}[1]{f(z) = \sum_{n=-\infty}^\infty a_n(0)(z-#1)^{n}}
+\newcommand{\coeflaurent}[1]{a_n(#1) = \frac{2\pi i}\oint_{C}\frac{f(z)}{(z-#1)^{n+1}}\dd z}
+
+% ---------------------------- Tenseurs ----------------------------
+\newcommand{\chris}[2]{{\Gamma^{#1}}_{#2}} % Christoffel Symbol
+\newcommand{\geodesics}[2]{\dv[2]{x^\lambda}{\tau}+\dv{x^{#1}}{\tau}\dv{x^{#2}}{\tau}\chris{\lambda}{#1 #2}} % Geodesics equation
+\newcommand{\riemann}[2]{{R^{#1}}_{#2}} % Riemann tensor
+\newcommand{\eqriemann}[5][\lambda]{\riemann{#2}{#3#4#5} = \partial_{#4}\chris{#2}{#3#5}-\partial_{#5}\chris{#2}{#3#4} + \chris{#2}{#4#1}\chris{#1}{#3#5}-\chris{#2}{#5#1}\chris{#1}{#3#4}} % Riemann Tensor Equation
+
+% ---------------------------- Relgen ----------------------------
+% Left-right parentheses for use in indexes
+\newcommand{\killingeq}[2]{\nabla_{\text{(} #1}K_{#2 \text{)}}} % Killing equations
+\newcommand{\tensorino}[3]{ \del_{\left[#1\right.}#2_{\left. #3\right]}  }
+
+
+% ---------------------------- MQ2 ----------------------------
+\newcommand{\I}{\mathbbm{1}} % Symbole de la matrice identité
+\newcommand{\kket}[1]{\left\|#1\right\rangle} % Ket avec deux barres
+\newcommand{\bbra}[1]{\left\langle#1\right\|} % Bra avec deux barres
+\newcommand{\brakket}[2]{\langle#1\|#2\rangle} % Braket avec deux barres dans le milieu
+\newcommand{\hatbf}[1]{\hat{\mathbf{#1}}} % Opérateurs bold style avec le hat pas bold
+\newcommand{\tldbf}[1]{\tld{\mathbf{#1}}} % Opérateurs bold style avec le hat pas bold
+\newcommand{\chkbf}[1]{\chk{\mathbf{#1}}} % Opérateurs bold style avec le hat pas bold
+\newcommand{\hw}{\hbar\omega} % Commande pour écrire hbar omega rapidement
+\newcommand{\tld}[1]{\Tilde{#1}} % Racoursie pour le tilde
+\newcommand{\chk}[1]{\check{#1}} % Racoursie pour le Check
+
+% ---------------------------- Phystat ----------------------------
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\dbar}{\text{\dj}} % d barré comme le \hbar
+
+% Ensembles de nombres
+\newcommand{\N}{\mathbb{N}} % Naturels
+\newcommand{\Z}{\mathbb{Z}} % Négatifs
+\newcommand{\Q}{\mathbb{Q}} % Rationnels
+\newcommand{\R}{\mathbb{R}} % Réels
+\newcommand{\C}{\mathbb{C}} % Complexes
+\renewcommand{\H}{\mathbb{H}} % Quaternions
+
+
+
+
+
+\newenvironment{aligneq}
+{
+\begin{equation}
+\begin{aligned}
+}{
+\end{aligned}
+\end{equation}
+\ignorespacesafterend
+}

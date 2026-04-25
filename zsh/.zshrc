@@ -54,6 +54,9 @@ alias git-list="find . -name ".git" -type d -prune"
 alias zshrc="vim ~/.zshrc"
 alias src="source ~/.zshrc"
 alias vs="code"
+alias vim="nvim"
+alias zu="zathura"
+alias si="sioyek"
 
 # -- LaTeX -- 
 alias tommypackage="vim /Users/tommy/Library/texmf/tex/latex/TommyPackage/TommyPackage.sty"
@@ -66,6 +69,8 @@ alias run="uv run"
 alias nuke="kill -9"
 alias sp="spotify_player"
 # alias music='kitty --title "Spotify" --detach -e spotify_player -c ~/.config/spotify-player/kitty'
+alias ard="arduino-cli"
+alias piou="pio run -t upload"
 
 # -- AI & LLM -- 
 alias ask="ollama run"
@@ -77,14 +82,10 @@ alias llama3="mlx_lm.chat --model ~/llm/llama3 --max-tokens 8192"
 alias aichat-config="vim /Users/tommy/Library/Application\ Support/aichat/config.yaml"
 
 # For claude code
-export ANTHROPIC_BASE_URL="http://127.0.0.1:1234"
-export ANTHROPIC_AUTH_TOKEN=lmstudio
-export API_TIMEOUT_MS="3000000"
-export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
-export ANTHROPIC_MODEL="default_model"
-export ANTHROPIC_SMALL_FAST_MODEL="default_model"
+export ANTHROPIC_BASE_URL="http://localhost:1234"
+export ANTHROPIC_AUTH_TOKEN="lmstudio"
+export ANTHROPIC_API_KEY=""
 
-# Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/tommy/.lmstudio/bin"
-# End of LM Studio CLI section
+
 

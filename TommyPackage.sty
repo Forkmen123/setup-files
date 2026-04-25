@@ -1,0 +1,682 @@
+% \ProvidesPackage{ProjectPackageA23}
+
+% -------------------------------
+% ProjectPackage
+% -------------------------------
+
+%% ProjectPackageA23.sty
+%% Copyright 2023 J. Charest, Y. Lapointe, M.-A. Plourde, B. Bédard
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Bastien Bédard.
+%
+% This work consists of the file ProjectPackageA23.sty.
+
+% -------------------------------
+% Packages utiles
+% -------------------------------
+
+\RequirePackage[left=2cm,right=2cm,top=3cm,bottom=3cm]{geometry}
+\RequirePackage{cmap} % Facilite recherche de texte Ctrl+F
+%\RequirePackage{cochineal}%format de texte
+%\RequirePackage[french]{babel} % Écriture en français
+%\RequirePackage{fvextra} % pour éviter des messages d'erreur de csquotes
+%\RequirePackage{csquotes} % pour éviter des messages d'erreur de babel
+\RequirePackage[utf8]{inputenc} % Encodage
+\RequirePackage[T1]{fontenc} % Encodage, facilite Ctrl+F
+%\frenchbsetup{StandardLists=true} % Compatibilité enumitem
+%\RequirePackage{tcolorbox}
+\RequirePackage[hyperref=true,sorting=none,style=phys]{biblatex} % Gestion de références, voir https://www.overleaf.com/learn/latex/Articles/Getting_started_with_BibLaTeX
+\RequirePackage{ifthen,xifthen}
+%%\RequirePackage{xparse}
+%\RequirePackage{xurl} % Pour améliorer la commande \url{}
+%\RequirePackage[bottom]{footmisc}
+
+% ------------------------------ Core -----------------------------
+%%\RequirePackage{lipsum} % Permet d'écrire du lorem lipsum pour simuler du texte
+%\RequirePackage{fontawesome5}% pour faire des logo sick comme python
+\RequirePackage{fancyhdr} % En-tête et pagination \pagestyle{fancy}
+\RequirePackage{ragged2e} % permet la commande \justifying
+%\RequirePackage[parfill]{parskip} % Remove paragraph indentation
+\RequirePackage{hyperref} % Liens cliquables dans PDF
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    citecolor=blue
+}
+\RequirePackage{multirow,multicol,array} % Tableaux %hhline retiré
+%\RequirePackage{tabularx} % pour faire des tableaux en spécifiant l'espace total occupé
+%%\RequirePackage{longtable} % Pour faire des tableaux qui peuvent être sur plus d'une page
+%\RequirePackage[compact,explicit]{titlesec} % Mise en forme des titres de section
+\RequirePackage{color} % Couleur
+\RequirePackage{xcolor} % Plus de couleurs
+%\RequirePackage{xspace} % pour avoir différents sets d'espaces (utile pour faire les commandes \og et \fg pour les guillemets français)***
+\RequirePackage[shortlabels]{enumitem} % Listes a) b) c)
+%\RequirePackage[safe]{tipa}
+%%\RequirePackage{glossaries} % pour faire un énorme glossaire (genre dans les rapports de pisse du SPLA)
+%%%\RequirePackage[misc]{ifsym} % pour avoir plus de symboles
+
+% ----------------------------- Math -------------------------------
+\RequirePackage{amsmath,amssymb,amsthm,mathtools,nicefrac,dsfont} % Symboles et polices mathématiques
+%%\RequirePackage[noabbrev,nameinlink]{cleveref}
+\RequirePackage{nccmath} % commandes de formatage d'équations
+\RequirePackage{mathrsfs} % Lettres cursives
+%\RequirePackage{wasysym,gensymb,textcomp} % Symboles divers
+\RequirePackage[makeroom]{cancel} % Barre oblique d'annulation
+\RequirePackage{calligra}
+%\RequirePackage[intlimits]{esint}%***
+%\RequirePackage{tensor}
+
+
+% ----------------------------- Physique ----------------------------
+\RequirePackage{verbatim} % Texte brut pour code informatique
+
+\RequirePackage[locale=FR]{siunitx} % Unités SI, ex.: \SI{2.9(1)e6}{\kilo\meter\per\second}
+
+\sisetup{detect-weight=true,detect-family=true,separate-uncertainty=true} % Config siunitx
+    % barre oblique au lieu de ^{-1} : \SI[per-mode=symbol]{1}{\meter\per\second}
+% \sisetup{output-decimal-marker={,}} % config siunitx pour mettre des virgules sans espace dans les nombres décimaux (ex. \num{3.141592653589793} = )
+
+%\RequirePackage[version=4]{mhchem} % Équations nucléaires, ex.: \ce{^227_90Th+}
+\RequirePackage{svrsymbols} % Symboles particules atomiques
+\RequirePackage{physics} % Your new best friend, voir manuel : http://ctan.math.ca/tex-archive/macros/latex/contrib/physics/physics.pdf
+
+\RequirePackage{xstring}
+
+
+% Figures et graphiques
+\RequirePackage{graphicx, floatrow,framed} % Figures et cadres
+\RequirePackage[hypcap=false]{caption}
+\RequirePackage{wrapfig,subcaption} % Sous-figures et légendes
+\RequirePackage{tikz} % Dessins et graphiques
+\RequirePackage[american]{circuitikz} % Dessin de circuits
+% \RequirePackage{pgfplots}
+% \usepgfplotslibrary{groupplots} % Subplots
+\usetikzlibrary{arrows} %  dessin de flèches
+% \pgfplotsset{compat=1.15} % Pour éviter bugs de mises à jour
+\RequirePackage{minted} % Environnement pour mettre du code
+% \RequirePackage{xfp} % Pour faire des opérations mathématique dans les commandes
+\RequirePackage{bbm} % Caractères comme la mat identité et les ensemble de nombre
+
+% -------------------------------
+% Constantes fréquentes
+% -------------------------------
+
+% Constantes Djodjo
+
+\newcommand{\hc}{6,626\times10^{-34}}       % Constante de Planck
+\newcommand{\hbc}{1,055\times10^{-34}}      % Constante de Planck réduite
+\newcommand{\hevc}{4,136\times10^{-15}}     % Constante de Plank en eV
+\newcommand{\hbevc}{6,582\times10^{-16}}    % Constante de Plank réduite en eV
+\newcommand{\cc}{2,998\times10^8}           % Vitesse de la lumière
+\newcommand{\kc}{1,381\times10^{-23}}       % Constante de Boltzmann
+\newcommand{\wc}{2,898\times10^{-3}}        % Constante de Wien
+\newcommand{\ec}{1,602\times10^{-19}}       % Charge élémentaire
+\newcommand{\mec}{9,109\times10^{-31}}      % Masse de l'électron
+\newcommand{\sbc}{5,670\times10^{-8}}       % Constante de Stefan-Boltzmann
+\newcommand{\prmtvtc}{8,854\times10^{-12}}  % Permittivité du vide (epsilon 0)
+\newcommand{\prmbltc}{1,257\times10^{-6}}   % Perméabilité du vide (mu 0)
+\newcommand{\rc}{8,3145}                    % Constante des gaz parfaits [J / mol K]
+\newcommand{\gc}{6,674\times10^{-11}}       % Constante gravitationnelle
+\newcommand{\agc}{9.807}                    % Accélération gravitationnelle terrestre
+\newcommand{\sfc}{7,297\times10^{-3}}       % Constante de structure fine
+
+% Constantes Trait (avec les unités)
+
+\newcommand{\vh}{6,626 \times 10^{-34}\text{ J s}}                      % Constante de Planck (J s)
+\newcommand{\vhbar}{1,055 \times  10^{-34} \text{ J s}}                 % Valeur de hbar (J s)
+\newcommand{\vheV}{4,136 \times 10^{-15}\text{ eV s}}                   % Constante de planck en eV s
+\newcommand{\vhbareV}{6,582 \times 10^{-16} \text{ eV s}}               % Valeur de hbar en eV s
+\newcommand{\vc}{2,998 \times 10^{8}\text{ m/s}}                        % c
+\newcommand{\vk}{1,381\times 10^{-23}\text{ m}^2 \text{kg/s}^2 \text{K}}% Constante de Boltzmann
+\newcommand{\vwien}{2,898\times 10^{-3}\text{ m K}}                     % Constante de Wien
+\newcommand{\vecharge}{1,602 \times 10^{-19}\text{ C}}                  % Charge électron
+\newcommand{\vemasse}{9,109 \times 10^{-31}\text{ kg}}                  % Masse électron
+\newcommand{\vstef}{5,670 \times 10^{-8} \text{ W/m}^2\text{K}^4}       % constante de Stefan-Boltzmann
+\newcommand{\veps}{8,854 \times 10^{-12} \text{ F/m}}                   % Permittivité du vide
+\newcommand{\vmu}{1,257\times 10^{-6} \text{ kg m/A}^{2}\text{s}^2}     % Perméabilité du vide
+\newcommand{\vr}{8,314\text{ J/K mol}}                                  % Constante des gaz parfaits
+\newcommand{\vG}{6,674 \times 10^{-11}\text{ m}^3\text{/kg s}^2}        % Valeur de G
+\newcommand{\vg}{9,807 \text{ m/s}^2}                                   % Accélération de la pesanteur terrestre
+
+% -------------------------------
+% Insertion de code
+% -------------------------------
+
+\newminted{python}{
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+} % \begin{pythoncode} pour insérer du code Python
+
+\newminted{cpp}{
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+} % \begin{cppcode} pour insérer du code C++
+
+\newminted{latex}{
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+} % \begin{latexcode} pour insérer du code LaTeX
+
+\newminted{text}{
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize
+} % \begin{textcode} pour insérer du code text (pratique pour insérer un output de console par exemple)
+
+% -------------------------------
+% Commandes de cours spécifiques
+% -------------------------------
+
+% ---------------------------- PM2 ---------------------------------- 
+\newcommand{\LL}{\mathcal{L}} % Lagrangien ou transfo Laplace
+\newcommand{\F}{\mathcal{F}} % Transfo Fourier
+
+% ---------------------------- Quantique ---------------------------- 
+% Équation de Schrödinger dépendante et indépendante du temps
+\newcommand{\indtemps}{\dv[2]{x}\psi(x) = \frac{2m}{\hbar^2}(V(x) - E)\psi(x)}
+\newcommand{\deptemps}{i\hbar\pdv{}{t} \Psi(x,t) = \left[-\frac{\hbar^2}{2m}\pdv[2]{}{x} + V(x,t)\right]\Psi(x,t)}
+
+% ---------------------------- PM3 ---------------------------- 
+% Relation de récurrence et équation des racines
+\newcommand{\rdr}{[(n+r)(n+r-1)+P_0(n+r)+Q_0]a_n+[P_1(n+r-1)+Q_1]a_{n-1}+...=0}
+\newcommand{\edr}{r^2+(P_0-1)r+Q_0=0}
+
+% ---------------------------- Électromag ----------------------------
+\newcommand{\rn}{% r cursif normal
+\resizebox{!}{1.3ex}{%
+    \begin{tikzpicture}[>=round cap]
+        \clip (0.085em,-0.1ex) rectangle (0.61em,0.875ex);
+        \draw [line width=.1ex, <->, rounded corners=0.13ex] (0.1em,0.1ex) .. controls (0.24em,0.4ex) .. (0.35em,0.8ex) .. controls (0.29em,0.725ex) .. (0.25em,0.6ex) .. controls (0.7em,0.8ex) and (0.08em,-0.4ex) .. (0.55em,0.25ex);
+    \end{tikzpicture}%
+}%
+}
+\newcommand{\rb}{% r cursif gras
+\resizebox{!}{1.3ex}{%
+    \begin{tikzpicture}[>=round cap]
+        \clip (0.085em,-0.1ex) rectangle (0.61em,0.875ex);
+        \draw [line width=.17ex, <->, rounded corners=0.13ex] (0.1em,0.1ex) .. controls (0.24em,0.4ex) .. (0.35em,0.8ex) .. controls (0.29em,0.725ex) .. (0.25em,0.6ex) .. controls (0.7em,0.8ex) and (0.08em,-0.4ex) .. (0.55em,0.25ex);
+    \end{tikzpicture}%
+}%
+}
+\newcommand{\rv}{\hat{\rb}} % r cursif vecteur unitaire
+
+\newcommand{\p}{\mathcal{P}}% pointeur de vecting
+
+% ---------------------------- Méthodes math ----------------------------
+
+\newcommand{\D}{\mathbb{D}} %Pour les groupe D 
+\DeclareMathOperator{\taylor}{ST} % Opérateur ST pour les séries de Taylor
+
+\newcommand{\residus}{\Res[f(z), z_0] = \frac{(m-1)!}\lim_{z\to z_0}\dv[m-1]{z} \{(z-z_0)^m f(z)\}}
+\newcommand{\laurent}[1]{f(z) = \sum_{n=-\infty}^\infty a_n(0)(z-#1)^{n}}
+\newcommand{\coeflaurent}[1]{a_n(#1) = \frac{2\pi i}\oint_{C}\frac{f(z)}{(z-#1)^{n+1}}\dd z}
+
+% ---------------------------- Tenseurs ----------------------------
+\newcommand{\chris}[2]{{\Gamma^{#1}}_{#2}} % Christoffel Symbol
+\newcommand{\geodesics}[2]{\dv[2]{x^\lambda}{\tau}+\dv{x^{#1}}{\tau}\dv{x^{#2}}{\tau}\chris{\lambda}{#1 #2}} % Geodesics equation
+\newcommand{\riemann}[2]{{R^{#1}}_{#2}} % Riemann tensor
+\newcommand{\eqriemann}[5][\lambda]{\riemann{#2}{#3#4#5} = \partial_{#4}\chris{#2}{#3#5}-\partial_{#5}\chris{#2}{#3#4} + \chris{#2}{#4#1}\chris{#1}{#3#5}-\chris{#2}{#5#1}\chris{#1}{#3#4}} % Riemann Tensor Equation
+
+% ---------------------------- Relgen ----------------------------
+% Left-right parentheses for use in indexes
+\newcommand{\killingeq}[2]{\nabla_{\text{(} #1}K_{#2 \text{)}}} % Killing equations
+\newcommand{\tensorino}[3]{ \del_{\left[#1\right.}#2_{\left. #3\right]}  }
+
+
+% ---------------------------- MQ2 ----------------------------
+\newcommand{\I}{\mathbbm{1}} % Symbole de la matrice identité
+\newcommand{\kket}[1]{\left\|#1\right\rangle} % Ket avec deux barres
+\newcommand{\bbra}[1]{\left\langle#1\right\|} % Bra avec deux barres
+\newcommand{\brakket}[2]{\langle#1\|#2\rangle} % Braket avec deux barres dans le milieu
+\newcommand{\hatbf}[1]{\hat{\mathbf{#1}}} % Opérateurs bold style avec le hat pas bold
+\newcommand{\tldbf}[1]{\tld{\mathbf{#1}}} % Opérateurs bold style avec le hat pas bold
+\newcommand{\chkbf}[1]{\chk{\mathbf{#1}}} % Opérateurs bold style avec le hat pas bold
+\newcommand{\hw}{\hbar\omega} % Commande pour écrire hbar omega rapidement
+\newcommand{\tld}[1]{\Tilde{#1}} % Racoursie pour le tilde
+\newcommand{\chk}[1]{\check{#1}} % Racoursie pour le Check
+
+% ---------------------------- Phystat ----------------------------
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\dbar}{\text{\dj}} % d barré comme le \hbar
+
+
+%********
+
+% Opérations sur des matrices et matrices augmentées (utile en PM1 surtout)
+\newcommand{\ro}[1]{%
+  \xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% Row operation width
+\AtBeginDocument{\setlength{\rowidth}{5em}}
+
+
+% -------------------------------
+% Commandes mathématiques générales
+% -------------------------------
+
+\newcommand{\ee}[1]{\times 10^{#1}} % Pour le x 10 à la ...
+\newcommand{\del}{\partial} % Parce que c'est moins long à écrire...
+\newcommand{\bs}[1]{\boldsymbol{#1}} % Raccourci pour boldsymbol
+\newcommand{\ddvs}{\dd{\phi}\dd{\theta}\dd{r}} % élément différentiel sphérique
+\newcommand{\ddvc}{\dd{x}\dd{y}\dd{z}} % élément différentiel cartésien
+
+% Ajoute un espace avant les unités avec la commande \si déjà existante
+\let\oldsi\si
+\renewcommand{\si}[1]{~\oldsi{#1}}
+
+\newcommand*{\Comb}[2]{{}^{#1}C_{#2}} % Combinaisons
+\DeclareMathOperator{\e}{e} % Beau e pour exponentielles
+
+% Affichage de t.q. pour tel que
+\newcommand{\tq}{\text{t.q.}}
+
+\newcommand{\tbs}{\textbackslash} % DÉFINIT UNE NOUVELLE COMMANDE PERMETTANT DE RACCOURCIR LA COMMANDE POUR INSÉRER UN "\" DANS LE TEXTE
+
+\newcommand{\bsl}{\backslash} % DÉFINIT UNE NOUVELLE COMMANDE PERMETTANT DE RACCOURCIR LA COMMANDE POUR INSÉRER UN "\" EN MATH MODE
+
+%pour afficher cosec
+\DeclareMathOperator{\cosec}{cosec}
+
+% Fonctions trigonométriques hyperboliques inverses (ben oui, de base, y'en a aucune!)
+\DeclareMathOperator{\arcosh}{arcosh}
+\DeclareMathOperator{\arsinh}{arsinh}
+\DeclareMathOperator{\artanh}{artanh}
+\DeclareMathOperator{\arsech}{arsech}
+\DeclareMathOperator{\arcsch}{arcsch}
+\DeclareMathOperator{\arcoth}{arcoth}
+\DeclareMathOperator{\arcosec}{arcosec}
+
+%fonction signus
+\DeclareMathOperator{\sgn}{sgn}
+
+% Ensembles de nombres
+\newcommand{\N}{\mathbb{N}} % Naturels
+\newcommand{\Z}{\mathbb{Z}} % Négatifs
+\newcommand{\Q}{\mathbb{Q}} % Rationnels
+\newcommand{\R}{\mathbb{R}} % Réels
+\newcommand{\C}{\mathbb{C}} % Complexes
+\renewcommand{\H}{\mathbb{H}} % Quaternions
+
+% Anti-left-right parenthèses () -> \qty()
+\def\resetMathstrut@{%
+  \setbox\z@\hbox{%
+    \mathchardef\@tempa\mathcode`\[\relax
+    \def\@tempb##1"##2##3{\the\textfont"##3\char"}%
+    \expandafter\@tempb\meaning\@tempa \relax
+  }%
+  \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@}
+\begingroup
+  \catcode`(\active \xdef({\qty\string(}
+\endgroup
+\mathcode`(="8000
+
+\newcommand{\T}{\text{T}} % Exposant T pour les matrices transposées
+
+% Environnement permettant de faire des équations en align mais avec un seul numéro d'équation par align
+\newenvironment{aligneq}
+{
+\begin{equation}
+\begin{aligned}
+}{
+\end{aligned}
+\end{equation}
+\ignorespacesafterend
+}
+
+
+% -------------------------------
+% Racoursie de fonctions utiles
+% -------------------------------
+
+% Redéfini \frac pour mettre 1/x lorsque le premier argument est laissé vide ou est simplement omis
+\let\oldfrac\frac
+\let\frac\undefined
+\DeclareDocumentCommand\crac{ s m g }
+{
+	\IfBooleanTF{#1}
+	{\let\fractype\flatfrac}
+	{\let\fractype\oldfrac}
+	\IfNoValueTF{#3}
+	{
+		\fractype{1}{#2}
+	}
+	{
+    \ifthenelse{\equal{#2}{}}
+    {\fractype{1}{#3}}
+    {\fractype{#2}{#3}}
+	}
+}
+\let\frac\crac
+\let\crac\undefined
+
+\newcommand{\sqfr}[2]{\sqrt{\frac{#1}{#2}}} % Racine de fraction
+\newcommand{\frsq}[2]{\frac{#1}{\sqrt{#2}}} % Racine au déno
+
+% Intégrale personnalisé pour les intégrales avec des bornes infini
+\newcommand{\inft}[2]{\int^{#2}_{#1}}
+
+    \let\oldinft\inft
+    \let\inft\undefined
+    \DeclareDocumentCommand\inftrac{ s g }
+    {
+        \IfBooleanTF{#1}
+        {
+            \IfNoValueTF{#2}
+            {
+                \oldinft{\infty}{-\infty}
+            }
+            {
+                \ifthenelse{\equal{#2}{}}
+                {\oldinft{-\infty}{0}}
+                {\oldinft{-\infty}{#2}}
+            }
+        }
+        {
+            \IfNoValueTF{#2}
+            {
+                \oldinft{-\infty}{\infty}
+            }
+            {
+                \ifthenelse{\equal{#2}{}}
+                {\oldinft{0}{\infty}}
+                {\oldinft{#2}{\infty}}
+            }
+        }
+    }
+    \let\inft\inftrac
+    \let\inftrac\undefined
+
+% Évaluation personnalisé pour les intégrales avec des bornes infini
+\newcommand{\evalf}[2]{\eval^{#2}_{#1}}
+
+    \let\oldevalf\evalf
+    \let\evalf\undefined
+    \DeclareDocumentCommand\evalfrac{ s g }
+    {
+    	\IfBooleanTF{#1}
+        {
+            \IfNoValueTF{#2}
+            {
+                \oldevalf{\infty}{-\infty}
+            }
+            {
+                \ifthenelse{\equal{#2}{}}
+                {\oldevalf{-\infty}{0}}
+                {\oldevalf{-\infty}{#2}}
+            }
+        }
+        {
+            \IfNoValueTF{#2}
+            {
+                \oldevalf{-\infty}{\infty}
+            }
+            {
+                \ifthenelse{\equal{#2}{}}
+                {\oldevalf{0}{\infty}}
+                {\oldevalf{#2}{\infty}}
+            }
+        }
+    }
+    \let\evalf\evalfrac
+    \let\evalfrac\undefined
+
+% Somme personnalisé pour les somme infini
+\newcommand{\suminf}[2]{\sum\limits_{#1 = #2}^{\infty}}% somme à l'infini
+
+    %permet de rendre optionnel le premier argument en mettant n= par défaut 
+    \let\oldsuminf\suminf
+    \let\suminf\undefined
+    \DeclareDocumentCommand\srac{ g g }
+    {
+    	\IfNoValueTF{#2}
+    	{
+    		\IfNoValueTF{#1}
+            {
+            \oldsuminf{\text{n}}{0}
+            }
+            {
+            \oldsuminf{\text{n}}{#1}
+            }
+    	}
+    	{
+        \ifthenelse{\equal{#1}{}}
+        {\oldsuminf{\text{n}}{#2}}
+        {\oldsuminf{#1}{#2}}
+    	}
+    }
+    \let\suminf\srac
+    \let\srac\undefined
+
+% Produit personnalisé pour les produits infini 
+\newcommand{\Pinf}[2]{\prod\limits_{#1 = #2}^{\infty}}
+
+    %permet de rendre optionnel le premier argument en mettant n= par défaut 
+    \let\oldPinf\Pinf
+    \let\Pinf\undefined
+    \DeclareDocumentCommand\Prac{ g g }
+    {
+    	\IfNoValueTF{#2}
+    	{
+    		\IfNoValueTF{#1}
+            {
+            \oldPinf{\text{n}}{0}
+            }
+            {
+            \oldPinf{\text{n}}{#1}
+            }
+    	}
+    	{
+        \ifthenelse{\equal{#1}{}}
+        {\oldPinf{\text{n}}{#2}}
+        {\oldPinf{#1}{#2}}
+    	}
+    }
+    \let\Pinf\Prac
+    \let\Prac\undefined
+
+%limite qui tend vers l'infini
+\newcommand{\limf}[2]{\lim\limits_{#1 \rightarrow #2}}
+
+    %permet de rendre optionnel le premier argument en mettant n= par défaut 
+    \let\oldlimf\limf
+    \let\limf\undefined
+    \DeclareDocumentCommand\limfrac{ s g }
+    {
+    	\IfBooleanTF{#1}
+    	{
+    		\oldlimf{#2}{-\infty}
+    	}
+    	{
+            \oldlimf{#2}{\infty}
+    	}
+    }
+    \let\limf\limfrac
+    \let\limfrac\undefined
+
+% limite qui tend vers 0
+\newcommand{\flim}[2]{\lim\limits_{#1 \rightarrow #2}}
+
+    \let\oldflim\flim
+    \let\flim\undefined
+    \DeclareDocumentCommand\flrac{ g g }
+    {
+    	\IfNoValueTF{#1}
+    	{
+    		\oldflim{\epsilon}{0}
+    	}
+    	{
+            \IfNoValueTF{#2}
+            {
+            \oldflim{#1}{0}
+            }
+            {
+            \oldflim{#1}{#2}
+            }
+    	}
+    }
+    \let\flim\flrac
+    \let\flrac\undefined
+
+%limite qui tend vers 0+-
+\newcommand{\limo}[2]{\lim\limits_{#1 \rightarrow #2}}
+
+    %permet de rendre optionnel le premier argument en mettant n= par défaut 
+    \let\oldlimo\limo
+    \let\limo\undefined
+    \DeclareDocumentCommand\orac{ s g }
+    {
+    	\IfBooleanTF{#1}
+    	{
+    		\IfNoValueTF{#2}
+            {
+            \oldlimo{\epsilon}{0^+}
+            }
+            {
+            \ifthenelse{\equal{#2}{}}
+            {\oldlimo{\epsilon}{0^+}}
+            {\oldlimo{#2}{0^+}}
+            }
+    	}
+    	{
+            \IfNoValueTF{#2}
+            {
+            \oldlimo{\epsilon}{0^-}
+            }
+            {
+            \ifthenelse{\equal{#2}{}}
+            {\oldlimo{\epsilon}{0^-}}
+            {\oldlimo{#2}{0^-}}
+            }
+    	}
+    }
+    \let\limo\orac
+    \let\orac\undefined
+
+% -------------------------------
+% Format de texte
+% -------------------------------
+
+%\setcounter{section}{0} % Titre et numérotage section
+\renewcommand*{\thefootnote}{[\arabic{footnote}]} % Crochets indice
+
+\setcounter{section}{0} % Titre et numérotage section
+
+% Numérotage section-équation (1.1)
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+\makeatletter\@addtoreset{equation}{section}\makeatother
+
+%\renewcommand\frenchtablename{\textsc{Tableau}} % "Tableau 1" au lieu de "Table 1"
+\floatsetup[table]{capposition=top}
+
+% -------------------------------
+% Commandes loufoques
+% -------------------------------
+
+% L'affaire est Ketchup pour les preuves
+\newcommand{\lek}{\text{\hspace{20pt}\large \usefont{U}{yswab}{m}{n} \couleur{3}{L}\couleur[15]{7}{E}\couleur[15]{11}{K}}
+}
+
+\newcommand{\teXmas}{\[\hat{\dot{\ddot{\dddot{\ddddot{\text{\LaTeX}}}}}}\]} % LaTeX de Noel
+\newcommand{\sauce}[1]{\textbf{\Large{\textcolor{red}{#1}}}}
+
+% sauce multicolore
+\makeatletter
+\newcounter{int}
+\newcommand{\couleur}[3][30]{\textcolor[hsb]{\fpeval{round(#2/#1,2)-trunc(#2/#1)},1, 1}{#3}}
+\newcounter{coul}
+
+\newcommand{\multicouleur}[2][30]{
+    \setcounter{int}{0}
+    \StrLen{#2}[\longueur]
+    \@whilenum\value{int}<\longueur\do{\couleur[#1]{\fpeval{\value{int}+1}}{\StrMid{#2}{\fpeval{\value{int}+1}}{\fpeval{\value{int}+1}}}\addtocounter{int}{1}}}
+\makeatother
+
+\newcommand{\SAUCE}[1]{\textbf{\Huge{\multicouleur{#1}}}}
+
+% Lien utile à porté de la main
+\newcommand{\link}{\href{https://www.youtube.com/watch?v=dQw4w9WgXcQ}{ici}
+}%lolXDmdrptdrjaimelesbiscuitspetitebaleinequisaute
+
+% Commande pour générer le symbole ' ¯\_(ツ)_/¯ '
+\def\shrug{\texttt{\raisebox{0.75em}{
+\char`\_}\char`\\\char`\_\kern-0.5ex(\kern-0.25ex\raisebox{
+0.25ex}{\rotatebox{45}{\raisebox{-.75ex}"\kern-1.5ex\rotatebox{
+-90})}}\kern-0.5ex)\kern-0.5ex\char`\_/\raisebox{0.75em}{\char`\_}}}	
+
+%----------------Mise en Page-------------------
+
+\pagestyle{fancy}%entête magique
+
+\parindent=0mm % pas d'indentation
+
+\fancyheadoffset{0 cm}
+\setlength{\headheight}{14.49999pt}
+\addtolength{\topmargin}{-1.0pt}
+
+\newcommand{\head}[6]%commande pour changer l'entête
+{
+    \lhead{#1 \:\:\: #2}
+    \chead{#3 \:\:\: #4}
+    \rhead{#5 \:\:\: #6}
+}
+
+\newcommand{\mypage}[9]%page de présentation toute faite
+ {\thispagestyle{empty}
+ \begin{titlepage}
+ \begin{center}
+ {\Large \textit{#2}}
+ \hfill
+ {\Large \textsc{#6}\\}
+ \vspace{5pt}
+ {\Large #1}
+ \hfill
+ {\Large \textsc{#7}}\\
+ \vspace{5pt}
+ \hfill
+ {\Large \textsc{#8}}\\
+ \vspace{5pt}
+ \hfill
+ {\Large \textsc{#9}}\\
+ \vspace{5pt}
+ \vspace{3cm}
+ {\Huge \textbf{#4} }\\
+ \vspace{5mm}
+ {\huge \textit{#5}}\\
+ \vspace{4cm}
+ {\Large Travail présenté à :}\\
+ \vspace{5mm}
+ {\large \textsc{#3}}\\
+ \vspace{2cm}
+ {\Large Travail fait le :}\\
+ \vspace{5mm}
+ {\large \today}\\
+ \vspace{\fill}
+ \vspace{-7mm}
+ \includegraphics[scale=0.14]{Logo.jpg}\\
+ \vspace{1mm}
+ {\large \scshape Département de physique, de génie physique et d'optique}
+ \end{center}
+ \end{titlepage}}

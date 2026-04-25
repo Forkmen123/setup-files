@@ -1,0 +1,32 @@
+snippet doc "ajout du début du document" Ab
+\usepackage{tommyTeX}
+
+\begin{document}
+
+	${0}
+
+\end{document}
+endsnippet 
+
+snippet pt "ajout de la page titre" b
+\begin{titlepage}
+	\centering
+	\includegraphics[width=4cm]{Logo_Ulaval.jpg}\\
+	{\large Département de physique, de génie physique et d'optique\\[4cm]}
+	{\LARGE\bfseries Étude de Cas\\[3cm]}
+	{\large Travail remis à\\[0.3cm]
+	...\\[2cm]}
+	{\large Par\\[0.3cm]
+	Tommy Roy\\[3cm]}
+	{\large Cours: \\[0.2cm]
+	Date de remise: }
+	\vfill
+\end{titlepage}
+endsnippet
+
+
+snippet today "Date"
+`date +%F`
+endsnippet
+
+

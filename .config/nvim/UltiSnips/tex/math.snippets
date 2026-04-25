@@ -1,0 +1,192 @@
+global !p
+def math():
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def comment(): 
+    return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+def env(name):
+    [x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+    return x != '0' and x != '0'
+
+endglobal
+
+context "math()"
+snippet // "Fraction" Ai
+\frac{${1}}{${2}}$0
+endsnippet
+
+context "math()"
+snippet qeq "quad et quad" A
+\quad \text{et} \quad  
+endsnippet
+
+context "math()"
+snippet sq "racine carrée" A
+\sqrt{${1}} $0
+endsnippet
+
+context "math()"
+snippet qu "quad" A
+\quad 
+endsnippet
+
+context "math()"
+snippet e= "&=" A
+&= 
+endsnippet
+
+context "math()"
+snippet imp "implies" A
+\implies 
+endsnippet
+
+context "math()"
+snippet mk "Inline Math" wA
+$${1}$$0
+endsnippet
+
+snippet beg "Begin Environment" wA
+\begin{${1:align*}}
+	${0:${VISUAL}}
+\end{$1}
+endsnippet
+
+snippet para "paragraph*" A
+\paragraph*{${1}}
+endsnippet
+
+context math(context)
+snippet oo "Infinity" wA
+\infty
+endsnippet
+
+snippet sum "Somme" wA
+\sum_{${1:n}=${2:0}}^{${3:\infty}} $0
+endsnippet
+
+snippet lim "Limite" wA
+\lim_{${1:x} \to ${2:\infty}} $0
+endsnippet
+
+
+context math(context)
+snippet ev "Evaluation bar auto" wA
+\bigg|_{${1:x_0}=${2:0}} $0
+endsnippet
+
+
+
+#// --- Implications Logiques ---
+
+context math(context)
+snippet => "Implies" wA
+\implies 
+endsnippet
+
+context math(context)
+snippet =< "Implied by" wA
+\impliedby 
+endsnippet
+
+context math(context)
+snippet iff "If and only if" wA
+\iff 
+endsnippet
+
+#// --- Flèches Simples (Limites, Fonctions) ---
+
+context math(context)
+snippet -> "To (rightarrow)" wA
+\to 
+endsnippet
+
+context math(context)
+snippet !> "Mapsto (pour définitions de fonctions)" wA
+\mapsto 
+endsnippet
+
+#// --- Autres ---
+
+context math(context)
+snippet <-> "Left Right Arrow" wA
+\leftrightarrow 
+endsnippet
+
+
+#// Tapez "__" pour créer _{} et entrer dedans
+context math(context)
+snippet __ "Subscript with {}" wA
+_{${1}} $0
+endsnippet
+
+#// Tapez "^^" ou "td" pour créer ^{} et entrer dedans
+context math(context)
+snippet sp "Superscript with {}" wA
+^{${1}} $0
+endsnippet
+
+#// Déclencheur : Une lettre + un chiffre (ex: x1, y2, A0)
+context math(context)
+snippet `([a-zA-Z])(\d)` "Auto Subscript" wA
+``rv = m[1] + "_" + m[2]``
+endsnippet
+
+#// Déclencheur : Une lettre + deux chiffres (ex: x12)
+context math(context)
+snippet `([a-zA-Z])(\d\d)` "Auto Subscript 2 digits" wA
+``rv = m[1] + "_{" + m[2] + "}"``
+endsnippet
+
+
+
+context math(context)
+snippet === "Equivalence / Identically equal" wA
+\equiv 
+endsnippet
+
+context math(context)
+snippet != "Not Equal" wA
+\neq 
+endsnippet
+
+
+context math(context)
+snippet app "Approx" wA
+\approx 
+endsnippet
+
+
+#// --- Parenthèses automatiques ---
+context math(context)
+snippet lrp "Left( )Right" wA
+\left( ${1:${VISUAL}} \right) $0
+endsnippet
+
+#// --- Crochets automatiques ---
+context math(context)
+snippet lrc "Left[ ]Right" wA
+\left[ ${1:${VISUAL}} \right] $0
+endsnippet
+
+#// --- Accolades automatiques ---
+#// Note : Les accolades nécessitent un \ devant en LaTeX
+context math(context)
+snippet lra "Left\{ \}Right" wA
+\left\\{ ${1:${VISUAL}} \right\\} $0
+endsnippet
+
+#// --- Valeur Absolue / Norme ---
+context math(context)
+snippet lrb "Left| |Right" wA
+\left| ${1:${VISUAL}} \right| $0
+endsnippet
+
+#// --- Chevrons (pour la physique quantique / moyennes) ---
+context math(context)
+snippet lrc "Left< >Right (Angle brackets)" wA
+\left\langle ${1:${VISUAL}} \right\rangle $0
+endsnippet
+
+
+
