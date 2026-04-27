@@ -1,4 +1,5 @@
 snippet doc "ajout du début du document" Ab
+\documentclass[12pt, letterpaper]{article}
 \usepackage{tommyTeX}
 
 \begin{document}
@@ -8,27 +9,54 @@ snippet doc "ajout du début du document" Ab
 \end{document}
 endsnippet 
 
-snippet pt "ajout de la page titre" b
-\begin{titlepage}
-	\centering
-	\includegraphics[width=4cm]{Logo_Ulaval.jpg}\\
-	{\large Département de physique, de génie physique et d'optique\\[4cm]}
-	{\LARGE\bfseries Étude de Cas\\[3cm]}
-	{\large Travail remis à\\[0.3cm]
-	...\\[2cm]}
-	{\large Par\\[0.3cm]
-	Tommy Roy\\[3cm]}
-	{\large Cours: \\[0.2cm]
-	Date de remise: }
-	\vfill
-\end{titlepage}
+snippet pto "document avec page titre" Ab
+\documentclass[12pt, letterpaper]{article}
+\usepackage{tommyTeX}
+\title{${1}}
+\cours{${2}}
+\prof{${3}}
+\dateremise{${4}}
+\author{Tommy Roy}
+${5}
+\maketitlepage
+
+\begin{document}
+
+	${0}
+
+\end{document}
 endsnippet
+
+
+snippet aut "auteur" Ab
+\author{${0}}
+endsnippet
+
+snippet ref "ref" A
+\ref{${1}}
+endsnippet
+
+snippet cite "cite" A
+\cite{${1}}
+endsnippet
+
+
 
 
 snippet today "Date"
 `date +%F`
 endsnippet
 
-snippet par "paragraphe" 
+snippet par "paragraphe" bA
 \paragraph{${1}} 
+endsnippet
+
+snippet sec "section" bA
+\section{${1}} 
+endsnippet
+
+snippet thm "theorem" bA
+\begin{theorem}
+	${1}
+\end{theorem}
 endsnippet

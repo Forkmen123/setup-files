@@ -1,0 +1,38 @@
+global !p
+def math():
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def comment(): 
+    return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+def env(name):
+    [x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+    return x != '0' and x != '0'
+
+endglobal
+
+
+context "math()"
+snippet lrp "Left( )Right" wA
+\left( ${1:${VISUAL}} \right) $0
+endsnippet
+
+context "math()"
+snippet lrc "Left[ ]Right" wA
+\left[ ${1:${VISUAL}} \right] $0
+endsnippet
+
+context "math()"
+snippet lra "Left\{ \}Right" wA
+\left\\{ ${1:${VISUAL}} \right\\} $0
+endsnippet
+
+context "math()"
+snippet lrb "Left| |Right" wA
+\left| ${1:${VISUAL}} \right| $0
+endsnippet
+
+context "math()"
+snippet lrc "Left< >Right (Angle brackets)" wA
+\left\langle ${1:${VISUAL}} \right\rangle $0
+endsnippet

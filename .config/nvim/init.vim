@@ -4,45 +4,28 @@ set number relativenumber
 set spelllang=fr,en_us
 set spell
 set numberwidth=1
-set signcolumn=number
+set signcolumn=yes
 set laststatus=0
 set cmdheight=0
 set noshowmode
-" Ne pas ouvrir le menu Quickfix automatiquement en cas de succès
-let g:vimtex_quickfix_mode = 0
+set conceallevel=2
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
-" Désactiver les messages de succès dans la ligne de commande (en bas)
-let g:vimtex_echo_ignore_wait = 1
-
-" Configurer les notifications : uniquement les erreurs
-let g:vimtex_compiler_silent = 1
-
-
-
-
-nmap <localleader>c <Plug>(vimtex-compile)
-
+" ========== Configuration VimTeX ==========
 let g:tex_flavor='latex'
 let g:vimtex_view_method='sioyek'
 let g:vimtex_quickfix_mode=0
-
-set conceallevel=2
+let g:vimtex_compiler_method='latexmk'
+let g:vimtex_complete_enabled=0
+let g:vimtex_view_automatic=0
+let g:vimtex_echo_ignore_wait=1
+let g:vimtex_compiler_silent=1
 let g:tex_conceal="abdmg"
-highlight texStatement guifg=#89b4fa gui=italic " Le bleu cyan des commandes
-highlight texArg       guifg=#f9e2af            " Le jaune des arguments {}
-highlight texMathZoneX guifg=#f2cdcd            " Le rose/rouge des zones mathématiques
-highlight Normal       guibg=#15171c            " Ton fond 21, 23, 28
-
-
-let g:vimtex_compiler_method = 'latexmk'
-let g:vimtex_complete_enabled = 0
-set rtp+=/usr/local/opt/fzf
-let g:fzf_vim = {}
-let g:fzf_vim.preview_window = []
-let g:vimtex_view_automatic = 0 
 
 let g:vimtex_compiler_latexmk = {
-    \ 'build_dir' : '',
+    \ 'build_dir' : 'build',
     \ 'callback' : 1,
     \ 'continuous' : 1,
     \ 'executable' : 'latexmk',
@@ -51,64 +34,127 @@ let g:vimtex_compiler_latexmk = {
     \   '-interaction=nonstopmode',
     \   '-synctex=1',
     \   '-file-line-error',
+    \   '-shell-escape',
+    \   '-auxdir=output',
+    \   '-emulate-aux-dir',
     \ ],
     \}
 
-" Configuration Sioyek
-let g:vimtex_view_sioyek_options = '--reuse-window'
+let g:vimtex_compiler_latexmk_engine='pdflatex'
+let g:vimtex_view_use_temp_files=0
+let g:vimtex_view_sioyek_options='--reuse-window --inverse-search "nvim --headless -c \"VimtexInverseSearch %2 ''%1''\""'
 
-" Démarrer automatiquement le serveur Neovim
-if empty(v:servername) && exists('*remote_startserver')
-  call remote_startserver('VIM')
-endif
+" Auto-compilation à la sauvegarde
+" autocmd BufRead,BufNewFile *.tex silent! call timer_start(100, {-> execute('VimtexCompile')})
 
-" Auto-compilation à la sauvegarde (optionnel)
-let g:vimtex_compiler_latexmk_engines = {'_' : '-pdf'}
-autocmd BufWritePost *.tex silent! VimtexCompile
 
+" ========== Highlights ==========
+highlight texStatement guifg=#89b4fa gui=italic
+highlight texArg       guifg=#f9e2af
+highlight texMathZoneX guifg=#f2cdcd
+highlight Normal       guibg=#15171c
+
+" ========== FZF ==========
+set rtp+=/usr/local/opt/fzf
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = []
+
+" ========== UltiSnips ==========
+let g:python3_host_prog='~/.neovim-venv/bin/python'
+let g:UltiSnipsExpandTrigger='<Tab>'
+let g:UltiSnipsJumpForwardTrigger='<Tab>'
+let g:UltiSnipsJumpBackwardTrigger='<S-Tab>'
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
+command! ReloadSnippets call UltiSnips#RefreshSnippets()
+
+" ========== Keybindings ==========
+" Undo/Redo
 nnoremap <D-z> u
-nnoremap <D-s-z> <C-r>
+nnoremap <D-S-z> <C-r>
 inoremap <D-z> <C-o>u
 inoremap <D-S-z> <C-o><C-r>
 vnoremap <D-z> <Esc>u
 vnoremap <D-S-z> <Esc><C-r>
 
+" Close buffer
 nnoremap <D-w> :bd<CR>
 nnoremap <C-w> :bd<CR>
 
+" Select all
 nnoremap <D-a> ggVG
 nnoremap <C-a> ggVG
 
+" Save
 nnoremap <D-s> :w<CR>
 inoremap <D-s> <Esc>:w<CR>a
 vnoremap <D-s> <Esc>:w<CR>
 
+" Move lines
 nmap <A-j> <Plug>MoveLineDown
 nmap <A-k> <Plug>MoveLineUp
 vmap <A-j> <Plug>MoveBlockDown
 vmap <A-k> <Plug>MoveBlockUp
 
-" Dupliquer avec Alt+Shift+j/k
+" Duplicate lines
 nnoremap <A-S-j> :t.<CR>
 nnoremap <A-S-k> :t.-1<CR>
 vnoremap <A-S-j> :t'><CR>gv
 vnoremap <A-S-k> :t'<-1<CR>gv
 
-command! ReloadSnippets call UltiSnips#RefreshSnippets()
-
-" Forward Search vers Sioyek avec Cmd + Shift + J
+" VimTeX
+nmap <localleader>c <Plug>(vimtex-compile)
 nmap <A-J> <plug>(vimtex-view)
 imap <A-J> <esc><plug>(vimtex-view)a
 
+" VimTeX - ouvrir PDF sans voler le focus
+nmap <A-J> :call OpenPDFNoFocus()<CR>
+imap <A-J> <esc>:call OpenPDFNoFocus()<CR>a
+
+function! OpenPDFNoFocus()
+    " Ouvrir le PDF
+    call vimtex#view#view()
+    " Refocus Alacritty immédiatement
+    call timer_start(150, {-> system('open -a Alacritty')})
+endfunction 
+
+" Comment
 nmap <A-/> gcc
 vmap <A-/> gc
 
+" Spell fix
+inoremap <D-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
-" --- Custom LaTeX highlights (TreeSitter) ---
-set termguicolors
+" Smooth scroll
+nnoremap <unique> <C-D> <cmd>call smoothie#do("\<C-D>")<CR>
+vnoremap <unique> <C-D> <cmd>call smoothie#do("\<C-D>")<CR>
 
+" ========== Plugins ==========
+call plug#begin()
+Plug 'lervag/vimtex'
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-dispatch'
+Plug 'machakann/vim-sandwich'
+Plug 'psliwka/vim-smoothie'
+Plug 'xiyaowong/transparent.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'KeitaNakamura/tex-conceal.vim'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'matze/vim-move'
+Plug 'folke/tokyonight.nvim'
+Plug 'dylanaraps/wal'
+call plug#end()
+
+" ========== Colorscheme ==========
+let g:tokyonight_style="night"
+colorscheme tokyonight
+
+" ========== Lua Configuration ==========
 lua << EOF
--- On vérifie si Treesitter est présent avant de configurer
+-- TreeSitter
 local status, ts = pcall(require, "nvim-treesitter.configs")
 if status then
     ts.setup {
@@ -119,84 +165,15 @@ if status then
     }
 end
 
--- On applique tes couleurs vibrantes (Overrides)
--- Celles-ci fonctionneront même si le setup ci-dessus attend un redémarrage
+-- Highlights LaTeX
 local hl = vim.api.nvim_set_hl
-hl(0, "@function.macro.latex", { fg = "#FABD2F", bold = true }) -- Gold
-hl(0, "@punctuation.special.latex", { fg = "#FE8019" })         -- Orange
-hl(0, "@variable.parameter.latex", { fg = "#83A598" })         -- Bleu
-hl(0, "@math.symbol.latex", { fg = "#FB4934" })                -- Rose/Rouge
-hl(0, "@label.latex", { fg = "#B8BB26" })                      -- Vert
-EOF
+hl(0, "@function.macro.latex", { fg = "#FABD2F", bold = true })
+hl(0, "@punctuation.special.latex", { fg = "#FE8019" })
+hl(0, "@variable.parameter.latex", { fg = "#83A598" })
+hl(0, "@math.symbol.latex", { fg = "#FB4934" })
+hl(0, "@label.latex", { fg = "#B8BB26" })
 
-"Fix tab size
-set tabstop=4
-set shiftwidth=4
-set expandtab
-
-"C'est le python pour pour UltiSnips
-let g:python3_host_prog = '~/.neovim-venv/bin/python'
-
-"Ajout des plugins 
-call plug#begin()
-
-Plug 'https://github.com/lervag/vimtex'
-Plug 'https://github.com/SirVer/ultisnips'
-Plug 'https://github.com/tpope/vim-dispatch'
-Plug 'https://github.com/machakann/vim-sandwich'
-Plug 'psliwka/vim-smoothie'
-Plug 'https://github.com/xiyaowong/transparent.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'https://github.com/KeitaNakamura/tex-conceal.vim'
-
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'matze/vim-move'
-
-Plug 'folke/tokyonight.nvim'
-
-
-call plug#end()
-
-" Configuration avant de charger le colorscheme
-let g:tokyonight_style = "night" " Force la version la plus sombre
-colorscheme tokyonight
-
-"Configuration UltiSnips 
-let g:UltiSnipsExpandTrigger       = '<Tab>'   
-let g:UltiSnipsJumpForwardTrigger  = '<Tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
-
-"Pour les snippets
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
-
-
-"Smooth scroll
-nnoremap <unique> <C-D> <cmd>call smoothie#do("\<C-D>") <CR>
-vnoremap <unique> <C-D> <cmd>call smoothie#do("\<C-D>") <CR>
-
-" --- Custom LaTeX highlights to match your screenshot ---
-lua << EOF
-local highlights = {
-    ["@function.macro.latex"] = { fg = "#fabd2f" }, -- Gold for \begin, \frac, etc.
-    ["@punctuation.special.latex"] = { fg = "#fe8019" }, -- Orange for { }
-    ["@string.latex"] = { fg = "#83a598" },         -- Blue for content in brackets
-    ["@variable.parameter.latex"] = { fg = "#83a598" }, -- Also blue for {arguments}
-    ["@math.symbol.latex"] = { fg = "#fb4934" },    -- Red/Pink for \gamma, \nu, \rho
-    ["@label.latex"] = { fg = "#79dac8" },          -- Aqua/Blue for labels
-}
-
-for group, settings in pairs(highlights) do
-    vim.api.nvim_set_hl(0, group, settings)
-end
-EOF
-
-lua << EOF
--- Configuration de texlab avec vim.lsp.config
+-- LSP texlab
 vim.lsp.config.texlab = {
   cmd = { 'texlab' },
   filetypes = { 'tex', 'plaintex', 'bib' },
@@ -205,8 +182,8 @@ vim.lsp.config.texlab = {
     texlab = {
       build = {
         executable = "latexmk",
-        args = {"-pdf", "-interaction=nonstopmode", "-synctex=1", "%f"},
-        onSave = true,
+        args = {"-pdf", "-interaction=nonstopmode", "-synctex=1", "-auxdir=output", "-outdir=build", "%f"},
+        onSave = false,
       },
       forwardSearch = {
         executable = "sioyek",
@@ -214,7 +191,7 @@ vim.lsp.config.texlab = {
           "--reuse-window",
           "--forward-search-file", "%f",
           "--forward-search-line", "%l",
-          "%p"
+          "build/%p"
         },
       },
       chktex = {
@@ -225,7 +202,6 @@ vim.lsp.config.texlab = {
   },
 }
 
--- Activer texlab automatiquement pour les fichiers .tex
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'tex', 'plaintex', 'bib' },
   callback = function()
@@ -233,7 +209,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- Keybindings LSP
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local opts = { buffer = args.buf }
@@ -245,7 +220,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- Configuration nvim-cmp
+-- nvim-cmp
 local cmp = require('cmp')
 cmp.setup({
   sources = {
@@ -257,30 +232,43 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   }),
 })
+
+vim.diagnostic.config({ virtual_text = true, signs = true })
 EOF
 
-set signcolumn=yes
-lua vim.diagnostic.config({ virtual_text = true, signs = true })
-
-
-
-"theme colors
+" ========== Theme colors ==========
 augroup CustomLatexColors
     autocmd!
-    " Fond du terminal (ton bleu-gris 21, 23, 28)
     autocmd ColorScheme * highlight Normal guibg=#15171c guifg=#dcdcdc
-
-    " Commandes LaTeX en Cyan (ex: \usepackage)
     autocmd ColorScheme * highlight texStatement guifg=#8be9fd gui=italic
-
-    " Arguments en Jaune/Beige (ex: {amsmath})
     autocmd ColorScheme * highlight texOptArgs guifg=#f1fa8c
     autocmd ColorScheme * highlight texArg guifg=#f1fa8c
-
-    " Environnements en Bleu (ex: document, center)
     autocmd ColorScheme * highlight texBeginEndName guifg=#8be9fd gui=bold
-    
-    " Chiffres et numéros de lignes
     autocmd ColorScheme * highlight LineNr guifg=#6272a4
 augroup END
 
+" ============ inkscape figures =============== gilles castel
+
+" inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+" nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+
+" " Éditer une figure avec fuzzy finder
+" nnoremap <C-f> :call EditFigure()<CR>
+" inoremap <C-f> <Esc>:call EditFigure()<CR>
+
+" function! EditFigure()
+"     let l:fig = system('inkscape-figures edit figures/')
+"     if v:shell_error == 0
+"         redraw!
+"     endif
+" endfunction
+
+" ============ inkscape-figures (Gilles Castel) ===============
+
+" Créer une figure (Mode Insertion)
+" Prend le texte sur la ligne courante comme nom de fichier
+inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+
+" Éditer une figure (Mode Normal)
+" Ouvre le fuzzy finder (rofi/dmenu/fzf selon votre installation) pour choisir la figure
+nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>

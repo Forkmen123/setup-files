@@ -1,0 +1,408 @@
+global !p
+def math():
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def comment(): 
+    return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+def env(name):
+    [x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+    return x != '0' and x != '0'
+
+endglobal
+
+context "math()"
+snippet oo "Infinity" wA
+\infty
+endsnippet
+
+context "math()"
+snippet RR "R" wA
+\R 
+endsnippet
+
+context "math()"
+snippet II "I" wA
+\I 
+endsnippet
+
+context "math()"
+snippet NN "N" wA
+\N 
+endsnippet
+
+context "math()"
+snippet ZZ "Z" wA
+\Z 
+endsnippet
+
+context "math()"
+snippet CC "C" wA
+\C 
+endsnippet
+
+context "math()"
+snippet QQ "Q" wA
+\Q 
+endsnippet
+
+context "math()"
+snippet ek "existe" wA
+\exists
+endsnippet
+
+snippet sum "Somme" wA
+\sum_{${1:n}=${2:0}}^{${3:\infty}} $0
+endsnippet
+
+snippet int "intérale" wA
+\int_{${1:n}}^{${2:\infty}} $0
+endsnippet
+
+snippet lim "Limite" wA
+\lim_{${1:n}\to${2:0}} $0
+endsnippet
+
+context "math()"
+snippet === "Equivalence / Identically equal" wA
+\equiv 
+endsnippet
+
+context "math()"
+snippet neq "Not Equal" A
+\neq  
+endsnippet
+
+context "math()"
+snippet app "Approx" A
+\approx 
+endsnippet
+
+
+context "math()"
+snippet to "To (rightarrow)" wA
+\to
+endsnippet
+
+context "math()"
+snippet mt "Mapsto (pour définitions de fonctions)" wA
+\mapsto 
+endsnippet
+
+
+context "math()"
+snippet iff "If and only if" wA
+\iff 
+endsnippet
+
+context "math()"
+snippet e= "&=" A
+&= 
+endsnippet
+
+context "math()"
+snippet imp "implies" A
+\implies 
+endsnippet
+
+context "math()"
+snippet ss "&=" A
+\subset
+endsnippet
+
+
+
+context "math()"
+snippet ii "in" wA
+\in
+endsnippet
+
+context "math()"
+snippet fa "for all" wA
+\forall
+endsnippet
+
+context "math()"
+snippet // "Fraction" Ai
+\frac{${1}}{${2}}$0
+endsnippet
+
+context "math()"
+snippet qeq "quad et quad" A
+\quad \text{et} \quad  
+endsnippet
+
+context "math()"
+snippet sq "racine carrée" A
+\sqrt{${1}} $0
+endsnippet
+
+context "math()"
+snippet qu "quad" A
+\quad 
+endsnippet
+
+context "math()"
+snippet sin "sin" A
+\sin 
+endsnippet
+
+context "math()"
+snippet cos "cos" A
+\cos 
+endsnippet
+
+context "math()"
+snippet tan "tan" A
+\tan 
+endsnippet
+
+context "math()"
+snippet asin "asin" A
+\asin 
+endsnippet
+
+context "math()"
+snippet acos "acos" A
+\acos 
+endsnippet
+
+context "math()"
+snippet atan "atan" A
+\atan 
+endsnippet
+
+context "math()"
+snippet alp "alpha" A
+\alpha 
+endsnippet
+
+context "math()"
+snippet bet "beta" A
+\beta 
+endsnippet
+
+context "math()"
+snippet chi "chi" A
+\chi 
+endsnippet
+
+context "math()"
+snippet del "delta" A
+\delta 
+endsnippet
+
+context "math()"
+snippet eps "epsilon" A
+\epsilon 
+endsnippet
+
+context "math()"
+snippet eta "eta" A
+\eta 
+endsnippet
+
+context "math()"
+snippet gam "gamma" A
+\gamma 
+endsnippet
+
+context "math()"
+snippet iot "iota" A
+\iota 
+endsnippet
+
+context "math()"
+snippet kap "kappa" A
+\kappa 
+endsnippet
+
+context "math()"
+snippet lam "lambda" A
+\lambda 
+endsnippet
+
+context "math()"
+snippet mu "mu" A
+\mu
+endsnippet
+
+context "math()"
+snippet nu "nu" A
+\nu	
+endsnippet
+
+context "math()"
+snippet ome "omega" A
+\omega 
+endsnippet
+
+context "math()"
+snippet phi "phi" A
+\phi 
+endsnippet
+
+context "math()"
+snippet pi "pi" A
+\pi 
+endsnippet
+
+context "math()"
+snippet psi "psi" A
+\psi 
+endsnippet
+
+context "math()"
+snippet rho "rho" A
+\rho 
+endsnippet
+
+context "math()"
+snippet sig "sigma" A
+\sigma 
+endsnippet
+
+context "math()"
+snippet tau "tau" A
+\tau 
+endsnippet
+
+context "math()"
+snippet the "theta" A
+\theta 
+endsnippet
+
+context "math()"
+snippet ups "upsilon" A
+\upsilon 
+endsnippet
+
+context "math()"
+snippet xi "xi" A
+\xi 
+endsnippet
+
+context "math()"
+snippet zet "zeta" A
+\zeta 
+endsnippet
+
+context "math()"
+snippet veps "varepsilon" A
+\varepsilon 
+endsnippet
+
+context "math()"
+snippet vkap "varkappa" A
+\varkappa 
+endsnippet
+
+context "math()"
+snippet vphi "vphi" A
+\varphi 
+endsnippet
+
+context "math()"
+snippet vpi "varpi" A
+\varpi 
+endsnippet
+
+context "math()"
+snippet vrho "vrho" A
+\varrho 
+endsnippet
+
+context "math()"
+snippet vsig "varsigma" A
+\varsigma 
+endsnippet
+
+context "math()"
+snippet vthe "vartheta" A
+\vartheta 
+endsnippet
+
+context "math()"
+snippet Del "Delta" A
+\Delta 
+endsnippet
+
+context "math()"
+snippet Gam "Gamma" A
+\Gamma 
+endsnippet
+
+context "math()"
+snippet Lam "Lambda" A
+\Lambda 
+endsnippet
+
+context "math()"
+snippet Ome "Omega" A
+\Omega 
+endsnippet
+
+context "math()"
+snippet Phi "Phi" A
+\Phi 
+endsnippet
+
+context "math()"
+snippet Pi "Pi" A
+\Pi 
+endsnippet
+
+context "math()"
+snippet Psi "Psi" A
+\Psi 
+endsnippet
+
+context "math()"
+snippet Sig "Sigma" A
+\Sigma 
+endsnippet
+
+context "math()"
+snippet The "Theta" A
+\Theta 
+endsnippet
+
+context "math()"
+snippet Ups "Upsilon" A
+\Upsilon 
+endsnippet
+
+context "math()"
+snippet Xi "Xi" A
+\Xi 
+endsnippet
+
+context "math()"
+snippet alf "aleph" options
+\aleph 
+endsnippet
+
+context "math()"
+snippet eth "beth" A
+\beth 
+endsnippet
+
+context "math()"
+snippet dah "daleth" A
+\daleth 
+endsnippet
+
+context "math()"
+snippet gim "gimel" A
+\gimel 
+endsnippet
+
+context "math()"
+snippet nab "nabla" A
+\nabla
+endsnippet
+
+
+
+
+
