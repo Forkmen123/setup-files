@@ -12,6 +12,7 @@ set conceallevel=2
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set clipboard=unnamedplus
 
 " ========== Configuration VimTeX ==========
 let g:tex_flavor='latex'
@@ -39,6 +40,7 @@ let g:vimtex_compiler_latexmk = {
     \   '-emulate-aux-dir',
     \ ],
     \}
+
 
 let g:vimtex_compiler_latexmk_engine='pdflatex'
 let g:vimtex_view_use_temp_files=0
@@ -249,21 +251,7 @@ augroup END
 
 " ============ inkscape figures =============== gilles castel
 
-" inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
-" nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 
-" " Éditer une figure avec fuzzy finder
-" nnoremap <C-f> :call EditFigure()<CR>
-" inoremap <C-f> <Esc>:call EditFigure()<CR>
-
-" function! EditFigure()
-"     let l:fig = system('inkscape-figures edit figures/')
-"     if v:shell_error == 0
-"         redraw!
-"     endif
-" endfunction
-
-" ============ inkscape-figures (Gilles Castel) ===============
 
 " Créer une figure (Mode Insertion)
 " Prend le texte sur la ligne courante comme nom de fichier

@@ -51,14 +51,17 @@ snippet ek "existe" wA
 \exists
 endsnippet
 
+context "math()"
 snippet sum "Somme" wA
 \sum_{${1:n}=${2:0}}^{${3:\infty}} $0
 endsnippet
 
+context "math()"
 snippet int "intérale" wA
 \int_{${1:n}}^{${2:\infty}} $0
 endsnippet
 
+context "math()"
 snippet lim "Limite" wA
 \lim_{${1:n}\to${2:0}} $0
 endsnippet
@@ -106,15 +109,15 @@ snippet imp "implies" A
 endsnippet
 
 context "math()"
-snippet ss "&=" A
-\subset
+snippet sb "subset equal" A
+\subseteq 
 endsnippet
 
 
 
 context "math()"
 snippet ii "in" wA
-\in
+\in 
 endsnippet
 
 context "math()"
@@ -399,10 +402,22 @@ endsnippet
 
 context "math()"
 snippet nab "nabla" A
-\nabla
+\nabla 
 endsnippet
 
 
 
+context "math()"
+snippet pwr "power set" A
+\mathscr{P} 
+endsnippet
 
+context "math()"
+snippet calf "mathcal F" A
+\mathcal{F} 
+endsnippet
 
+context "math()"
+snippet ens "ensemble" A
+\\{${1} \\,|\\, ${2}\\} ${0}
+endsnippet
