@@ -1,6 +1,6 @@
 snippet doc "ajout du début du document" Ab
 \documentclass[12pt, letterpaper]{article}
-\usepackage{tommyTeX}
+\usepackage[${1:french}]{tommyTeX}
 
 \begin{document}
 
@@ -11,13 +11,13 @@ endsnippet
 
 snippet pto "document avec page titre" Ab
 \documentclass[12pt, letterpaper]{article}
-\usepackage{tommyTeX}
-\title{${1}}
-\cours{${2}}
-\prof{${3}}
-\dateremise{${4}}
+\usepackage[${1:french}]{tommyTeX}
+\title{${2}}
+\cours{${3}}
+\prof{${4}}
+\dateremise{${5}}
 \author{Tommy Roy}
-${5}
+${6}
 \maketitlepage
 
 \begin{document}
